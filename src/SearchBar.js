@@ -1,5 +1,6 @@
 import React from 'react';
 import Search from './Search'
+import MovieCard from './MovieCard'
 
 class SearchBar extends React.Component {
 
@@ -8,21 +9,13 @@ class SearchBar extends React.Component {
         movieObject: null
     }
 
-    // componentDidMount = () => {
-
-    //     fetch(`http://www.omdbapi.com/?t=${this.state.movie}&apikey=3b5b527e`)
-    //     .then(resp => resp.json())
-    //     .then(console.log)
-     
-    // }
-
     componentDidUpdate(prevProps){
 
         if (prevProps.movie !== this.state.movie){
-            fetch(`http://www.omdbapi.com/?t=${this.state.movie}&apikey=3b5b527e`)
+            fetch(`http://www.omdbapi.com/?s=${this.state.movie}&apikey=3b5b527e`)
             .then(resp => resp.json())
-            .then(data => console.log(data))
-            // .then(data=> this.setState({movieObject: data}, ()=>console.log(this.state.movieObject)))
+            // .then(data => console.log(data.Search))
+            .then(data=> this.setState({movieObject: data.Search}, ()=> console.log(this.state.movieObject)))
         }
 
     }
@@ -31,14 +24,31 @@ class SearchBar extends React.Component {
         this.setState({movie:e.target.value}, ()=>console.log(this.state.movie))
     }
 
+    renderMovie = ()=>{
+        console.log(this.state.movieObject, "reanderMovie")
+        // return this.state.movieObject.map((movie)=> < MovieCard title={movie.title}/>)
+    }
+
     render(){
 
-        // console.log(this.state.movieObject)
 
         return(
             <div>
-                <h4>Search Movie</h4>
-                <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
+                {
+
+                    this.state.movieObject === null? 
+                    <>
+                    <p>Movie Title</p>
+                    <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
+                    </> :
+                    <>
+                    <p>Movie Title</p>
+                    <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
+                    {this.renderMovie}
+                    </>
+                }
+                
+                
             </div>  
         )
     }
