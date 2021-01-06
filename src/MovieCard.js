@@ -7,7 +7,7 @@ function MovieCard (props){
     return (
         <>
         <h1>test</h1>
-        <h1>{props.title}</h1>
+        {/* <h1>{props.movie.Title}</h1> */}
         </>
     )
 }

@@ -14,8 +14,7 @@ class SearchBar extends React.Component {
         if (prevProps.movie !== this.state.movie){
             fetch(`http://www.omdbapi.com/?s=${this.state.movie}&apikey=3b5b527e`)
             .then(resp => resp.json())
-            // .then(data => console.log(data.Search))
-            .then(data=> this.setState({movieObject: data.Search}, ()=> console.log(this.state.movieObject)))
+            .then(data=> this.setState({movieObject: data.Search}))
         }
 
     }
@@ -25,30 +24,29 @@ class SearchBar extends React.Component {
     }
 
     renderMovie = ()=>{
-        console.log(this.state.movieObject, "reanderMovie")
-        // return this.state.movieObject.map((movie)=> < MovieCard title={movie.title}/>)
+
+        if (this.state.movieObject ===null){
+            return "sorry"
+        } else{
+            // console.log(this.state.movieObject, "reanderMovie")
+
+            return this.state.movieObject.map((movie)=> < MovieCard movie={movie} key={movie.imdbID}/>)
+        }
     }
 
     render(){
 
+        console.log("movieObj", this.state.movieObject)
+
 
         return(
-            <div>
-                {
+            <div>    
+                
+                    <p>Movie Title</p>
+                    <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
+                    <h3>Hello</h3>
+                    {/* {this.renderMovie()} */}
 
-                    this.state.movieObject === null? 
-                    <>
-                    <p>Movie Title</p>
-                    <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
-                    </> :
-                    <>
-                    <p>Movie Title</p>
-                    <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
-                    {this.renderMovie}
-                    </>
-                }
-                
-                
             </div>  
         )
     }
