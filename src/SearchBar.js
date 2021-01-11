@@ -9,14 +9,14 @@ class SearchBar extends React.Component {
         movieObject: null
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps, prevState){
+        console.log("conponetDidUpdate", prevState)
 
-        if (prevProps.movie !== this.state.movie){
-            fetch(`http://www.omdbapi.com/?s=${this.state.movie}&apikey=3b5b527e`)
+        if (this.state.movie !== prevState.movie){
+            fetch(`http://www.omdbapi.com/?s=${this.state.movie}&apikey=${process.env.REACT_APP_API_KEY}`)
             .then(resp => resp.json())
             .then(data=> this.setState({movieObject: data.Search}))
         }
-
     }
 
     searchHandler=(e)=>{
@@ -24,19 +24,16 @@ class SearchBar extends React.Component {
     }
 
     renderMovie = ()=>{
+                if (this.state.movieObject !== null && this.state.movieObject !== undefined){
 
-        if (this.state.movieObject ===null){
-            return "sorry"
-        } else{
-            // console.log(this.state.movieObject, "reanderMovie")
-
-            return this.state.movieObject.map((movie)=> < MovieCard movie={movie} key={movie.imdbID}/>)
+                    return this.state.movieObject.map((movie)=> < MovieCard movie={movie} key={movie.imdbID}/>)
+                }
         }
-    }
+
 
     render(){
 
-        console.log("movieObj", this.state.movieObject)
+        console.log("env", process.env)
 
 
         return(
@@ -44,8 +41,11 @@ class SearchBar extends React.Component {
                 
                     <p>Movie Title</p>
                     <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
-                    <h3>Hello</h3>
-                    {/* {this.renderMovie()} */}
+                   
+                    <h3>Results for "{this.state.movie}"</h3>
+                    {this.renderMovie()}
+                   
+
 
             </div>  
         )
