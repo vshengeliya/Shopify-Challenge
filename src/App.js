@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './Header'
-import SearchBar from './SearchBar'
+import Header from './Components/Header'
+import ResultContainer from './Containers/ResultContainer'
 
 import './App.css';
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <SearchBar/>
+      <ResultContainer/>
     </div>
   );
 }
