@@ -6,11 +6,12 @@ import Banner from 'react-js-banner';
 
 class ResultContainer extends React.Component {
 
+    
+    
     state = {
         movie: "",
         movieObject: null,
         updatedMovies: []
-        // nominatedMovie: []
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -28,10 +29,18 @@ class ResultContainer extends React.Component {
 
     appClickHandler=(movie_object)=>{
 
-        let newArray = [...this.state.movieObject]
-        let filteredObj = newArray.find((obj)=> obj=== movie_object)
-        filteredObj.nominated = true
-        this.setState({updatedMovies:newArray}) 
+        let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true) 
+        //duplicate varibale
+        if (nominatedMovies.length >=5){
+            return null;
+        } else{
+
+            let newArray = [...this.state.movieObject]
+            let filteredObj = newArray.find((obj)=> obj=== movie_object)
+            filteredObj.nominated = true
+            this.setState({updatedMovies:newArray}) 
+        }
+
     }
 
     removeClickHandler=(movie_object)=>{
@@ -45,14 +54,13 @@ class ResultContainer extends React.Component {
 
     displayBanner= ()=> {
 
-        let nominatedMovies = this.state.updatedMovies.filter(movies => movies.nominated === true)
-
-        console.log("nominated movies", nominatedMovies.length)
+        let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
+  
         if (nominatedMovies.length >= 5){
 
           return  <Banner showBanner={true}>
              <div>
-               <h3>You've nominated 5 and more movies</h3>
+               <h4>You've nominated all 5 movies</h4>
              </div>
             </Banner>
         }
@@ -64,7 +72,7 @@ class ResultContainer extends React.Component {
             return this.state.movieObject.map((movie)=> 
             < MovieCard movie={movie} key={movie.imdbID} 
             appClickHandler={this.appClickHandler} 
-            nominatedMovie={this.state.nominatedMovie}
+            updatedMovies={this.state.updatedMovies}
             />)
         }
     }
@@ -76,34 +84,31 @@ class ResultContainer extends React.Component {
                 
         let newResult = newArray.map(movie => < MovieCard movie={movie} key={movie.imdbID} 
             removeClickHandler={this.removeClickHandler} nominated={true} />)
-
-        return newResult
+        return newResult;
     }
 
     render(){ 
 
-    console.log("updatedMovies", this.state.updatedMovies)
-
         return(
             <>
             {this.displayBanner()}
-            <p>Movie Title</p>
+            <h4>Movie Title</h4>
             <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
             <div className="row"> 
             <div className="col-s-2 border col-xs-offset-4">
             {    
             <>
-            <p>  Results for "{this.state.movie}"</p>
+            <h6>  Results for "{this.state.movie}"</h6>
             {this.renderMovie()}
             </>
             }
             </div>
             <div className="col-s-2 border col-xs-offset-4">
 
-            <p>
+            <h6>
             Nominated
             {this.renderNominatedMovies()}
-            </p> 
+            </h6> 
             </div>         
             </div> 
             </> 
