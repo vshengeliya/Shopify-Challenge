@@ -23,15 +23,10 @@ class ResultContainer extends React.Component {
     }
 
     searchHandler=(e)=>{
-        this.setState({movie:e.target.value}, ()=>console.log(this.state.movie))
+        this.setState({movie:e.target.value})
     }
 
     appClickHandler=(movie_object)=>{
-
-        // let movieArray = []
-        // movieArray.push(movie_object)
-
-        // this.setState({nominatedMovie:movieArray})
 
         let newArray = [...this.state.movieObject]
         let filteredObj = newArray.find((obj)=> obj=== movie_object)
@@ -48,19 +43,20 @@ class ResultContainer extends React.Component {
         this.setState({updatedMovies:newArray}) 
     }
 
-//     displayBanner= ()=> {
-//         if (this.updatedMovies !==null && this.updatedMovies.length === 5){
+    displayBanner= ()=> {
 
-//           return  <Banner showBanner={true}>
-//   <div>
-//     <h1>h1</h1>
-//     <h2>h2</h2>
-//     <h3>h3</h3>
-//   </div>
-// </Banner>
+        let nominatedMovies = this.state.updatedMovies.filter(movies => movies.nominated === true)
 
-//         }
-//     }
+        console.log("nominated movies", nominatedMovies.length)
+        if (nominatedMovies.length >= 5){
+
+          return  <Banner showBanner={true}>
+             <div>
+               <h3>You've nominated 5 and more movies</h3>
+             </div>
+            </Banner>
+        }
+    }
 
     renderMovie = ()=>{
 
@@ -68,7 +64,7 @@ class ResultContainer extends React.Component {
             return this.state.movieObject.map((movie)=> 
             < MovieCard movie={movie} key={movie.imdbID} 
             appClickHandler={this.appClickHandler} 
-            // nominatedMovie={this.state.nominatedMovie}
+            nominatedMovie={this.state.nominatedMovie}
             />)
         }
     }
@@ -90,11 +86,11 @@ class ResultContainer extends React.Component {
 
         return(
             <>
+            {this.displayBanner()}
             <p>Movie Title</p>
             <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
             <div className="row"> 
             <div className="col-s-2 border col-xs-offset-4">
-            {/* {this.displayBanner()} */}
             {    
             <>
             <p>  Results for "{this.state.movie}"</p>
