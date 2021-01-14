@@ -10,7 +10,8 @@ class ResultContainer extends React.Component {
         movie: "",
         movieObject: null,
         nominatedMovies: null,
-        isMax: false
+        isMax: false,
+        renderBanner: false
     };
 
     componentDidUpdate(prevProps, prevState){
@@ -26,32 +27,34 @@ class ResultContainer extends React.Component {
         this.setState({movie:e.target.value})
     };
 
+    // getNominatedMovies = (movies) => {
+    //     if (movies !== undefined && movies.length >= 5) {
+    //         this.setState({renderBanner: true})
+    //     } else{
+    //         this.setState({renderBanner: false})
+    //     }
+    // }
+
     //banner not working
-    displayBanner = (nominatedMovies)=>{
-        console.log("before condition", nominatedMovies)
-        if (nominatedMovies !== undefined && nominatedMovies.length >= 5) {
-         console.log( nominatedMovies)
-            return (
-        //     <Banner showBanner={true}>
+    renderDisplayBanner = () => (
+        <Banner showBanner={true}>
             <div>
               <h4>You've nominated all 5 movies</h4>
             </div>
-        //    </Banner>
-        )
-        } 
-    }
+        </Banner>
+    )
 
-    render(){ 
+    render() { 
         return(
             <>  
-            { this.displayBanner()}
+            {/* { this.state.renderBanner && this.renderDisplayBanner() } */}
             <h4>Movie Title</h4>
             <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
             <div className='row'>
             <MovieContainer 
             movie={this.state.movie}
             movieObject={this.state.movieObject}
-            displayBanner={this.displayBanner}/>
+            getNominatedMovies={this.getNominatedMovies}/>
             </div>
             </>
         

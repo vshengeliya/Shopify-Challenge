@@ -58,10 +58,12 @@ class MovieContainer extends React.Component {
     }
 
     render(){ 
-        this.helper()
-        
+        let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
+        // this.props.getNominatedMovies(nominatedMovies)
+
         return(
             <>
+            {/* {this.props.getNominatedMovies(nominatedMovies)} */}
             <div className="col-s-2 border col-xs-offset-4"> 
             <h6>  Results for "{this.props.movie}"</h6>
             {this.renderMovie()}
