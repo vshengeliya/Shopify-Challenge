@@ -9,7 +9,8 @@ class ResultContainer extends React.Component {
 
     state = {
         movie: "",
-        movieObject: null
+        movieObject: null,
+        isMax: false
     };
 
     componentDidUpdate(prevProps, prevState){
@@ -26,29 +27,35 @@ class ResultContainer extends React.Component {
     };
 
     displayBanner = (nominatedMovies)=>{
+        console.log("nominated", nominatedMovies)
         if (nominatedMovies.length >= 5){
 
-       return  <Banner showBanner={true}>
-             <div>
-               <h4>You've nominated all 5 movies</h4>
-             </div>
-            </Banner>
+        this.setState({isMax: !this.state.isMax})
         }
         
+    }
+
+    renderBannder=()=>{
+
+         return <Banner showBanner={true}>
+         <div>
+           <h4>You've nominated all 5 movies</h4>
+         </div>
+        </Banner>
     }
 
     render(){ 
 
         return(
-            <>
-            {this.displayBanner}
+            <>  
+            {this.state.isMax ? this.renderBannder() : null}
             <h4>Movie Title</h4>
             <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
             <div className='row'>
             <MovieContainer 
             movie={this.state.movie}
             movieObject={this.state.movieObject}
-            displayBanner = {this.displayBanner}/>
+            displayBanner={this.displayBanner}/>
             </div>
             </>
         

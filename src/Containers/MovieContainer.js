@@ -60,8 +60,8 @@ class MovieContainer extends React.Component {
 
     helper =()=>{
         let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
+        console.log("movieCont", nominatedMovies)
         this.props.displayBanner(nominatedMovies)
-
     }
 
     renderNominatedMovies =()=>{
@@ -75,11 +75,10 @@ class MovieContainer extends React.Component {
     }
 
     render(){ 
-
+        this.helper()
+        
         return(
-         
             <>
-            {/* {this.displayBanner()} */}
             <div className="col-s-2 border col-xs-offset-4"> 
             <h6>  Results for "{this.props.movie}"</h6>
             {this.renderMovie()}
