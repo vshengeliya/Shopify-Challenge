@@ -1,7 +1,5 @@
 import React from 'react';
 import MovieCard from '../Components/MovieCard'
-import Banner from 'react-js-banner';
-
 import "../ResultContainer.css";
 
 class MovieContainer extends React.Component {
@@ -44,23 +42,8 @@ class MovieContainer extends React.Component {
         this.setState({updatedMovies:newArray}) 
     };
 
-    // displayBanner= ()=> {
-
-    //     let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
-  
-    //     if (nominatedMovies.length >= 5){
-
-    //       return  <Banner showBanner={true}>
-    //       <div>
-    //         <h4>You've nominated all 5 movies</h4>
-    //       </div>
-    //      </Banner>
-    //     };
-    // };
-
     helper =()=>{
         let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
-        console.log("movieCont", nominatedMovies)
         this.props.displayBanner(nominatedMovies)
     }
 
