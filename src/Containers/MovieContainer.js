@@ -2,80 +2,42 @@ import React from 'react';
 import MovieCard from '../Components/MovieCard'
 import "../ResultContainer.css";
 
-class MovieContainer extends React.Component {
+function MovieContainer (props) {
 
-    state = {
-        updatedMovies: []
-    };
+    const renderMovie = ()=>{
 
-    appClickHandler=(movie_object)=>{
-
-        let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true) 
-        //duplicate varibale
-        if (nominatedMovies.length >=5){
-            return null;
-        } else{
-
-            let newArray = [...this.props.movieObject] //pass as propos
-            let filteredObj = newArray.find((obj)=> obj=== movie_object)
-            filteredObj.nominated = true
-            this.setState({updatedMovies:newArray}) 
-        }
-    };
-
-    renderMovie = ()=>{
-
-        if (this.props.movieObject !== null && this.props.movieObject !== undefined){
-            return this.props.movieObject.map((movie)=> 
+        if (props.movieObject !== null && props.movieObject !== undefined){
+            return props.movieObject.map((movie)=> 
             < MovieCard movie={movie} key={movie.imdbID} 
-            appClickHandler={this.appClickHandler} 
-            updatedMovies={this.state.updatedMovies}
+            appClickHandler={props.appClickHandler} 
+            updatedMovies={props.updatedMovies}
             />);
         };
     };
 
-    removeClickHandler=(movie_object)=>{
-
-        let newArray = [...this.props.movieObject]
-        let filteredObj = newArray.find((obj)=> obj=== movie_object)
-        filteredObj.nominated = false
-        this.setState({updatedMovies:newArray}) 
-    };
-
-    helper =()=>{
-        let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
-        this.props.displayBanner(nominatedMovies)
-    }
-
-    renderNominatedMovies =()=>{
+    const renderNominatedMovies = ()=>{
   
-       let newArray =  this.state.updatedMovies.filter(movie=> {
+       let newArray = props.updatedMovies.filter(movie=> {
             return movie.nominated === true});
                 
         let newResult = newArray.map(movie => < MovieCard movie={movie} key={movie.imdbID} 
-            removeClickHandler={this.removeClickHandler} nominated={true} />);
+            removeClickHandler={props.removeClickHandler} nominated={true} />);
         return newResult;
-    }
-
-    render(){ 
-        let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true)
-        // this.props.getNominatedMovies(nominatedMovies)
+    } 
 
         return(
             <>
-            {/* {this.props.getNominatedMovies(nominatedMovies)} */}
             <div className="col-s-2 border col-xs-offset-4"> 
-            <h6>  Results for "{this.props.movie}"</h6>
-            {this.renderMovie()}
+            <h6>  Results for "{props.movie}"</h6>
+            {renderMovie()}
             </div>
             <div className="col-s-2 border col-xs-offset-4"> 
             <h6>Nominations</h6>
-            {this.renderNominatedMovies()} 
+            {renderNominatedMovies()} 
             </div>
             </>   
            
         )
-    };
 };
 
 export default MovieContainer
