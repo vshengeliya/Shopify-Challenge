@@ -1,8 +1,24 @@
 import React from 'react';
+import styled from 'styled-components'
 import Search from '../Components/Search'
-import "../ResultContainer.css";
 import MovieContainer from '../Containers/MovieContainer';
 import Banner from 'react-js-banner';
+
+const ResultsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+`
+
+const SearchWrapper = styled.div`
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 8px;
+`
 
 class ResultContainer extends React.Component {
 
@@ -12,7 +28,8 @@ class ResultContainer extends React.Component {
         nominatedMovies: null,
         isMax: false,
         renderBanner: false,
-        updatedMovies: []
+        updatedMovies: [],
+        tooManyResults: false
     };
 
     componentDidUpdate(prevProps, prevState){
@@ -20,7 +37,13 @@ class ResultContainer extends React.Component {
         if (this.state.movie !== prevState.movie){
             fetch(`http://www.omdbapi.com/?s=${this.state.movie}&apikey=${process.env.REACT_APP_API_KEY}`)
             .then(resp => resp.json())
-            .then(data=> this.setState({movieObject: data.Search}))
+            .then(data => {
+                if (data.Error === 'Too many results.') {
+                    this.setState({ tooManyResults: true })
+                } else {
+                    this.setState({movieObject: data.Search, tooManyResults: false })
+                }
+            })
         };
     };
 
@@ -63,20 +86,22 @@ class ResultContainer extends React.Component {
 
     render() { 
         return(
-            <>  
+            <ResultsWrapper>  
             { this.state.renderBanner ? this.renderDisplayBanner() : null }
-            <h4>Movie Title</h4>
-            <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
-            <div className='row'>
+            <SearchWrapper>
+                <h4>Movie Title</h4>
+                <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
+            </SearchWrapper>
             <MovieContainer 
-            movie={this.state.movie}
-            movieObject={this.state.movieObject}
-            getNominatedMovies={this.getNominatedMovies}
-            appClickHandler ={this.appClickHandler}
-            updatedMovies={this.state.updatedMovies}
-            removeClickHandler={this.removeClickHandler}/>
-            </div>
-            </>
+                movie={this.state.movie}
+                movieObject={this.state.movieObject}
+                getNominatedMovies={this.getNominatedMovies}
+                appClickHandler ={this.appClickHandler}
+                updatedMovies={this.state.updatedMovies}
+                removeClickHandler={this.removeClickHandler}
+                tooManyResults={this.state.tooManyResults}
+            />
+            </ResultsWrapper>
         )
     };
 };

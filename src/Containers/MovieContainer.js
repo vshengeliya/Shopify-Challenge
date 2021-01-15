@@ -1,6 +1,31 @@
 import React from 'react';
+import styled from 'styled-components'
 import MovieCard from '../Components/MovieCard'
 import "../ResultContainer.css";
+
+const MovieWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`
+
+const Movies = styled.div`
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 8px;
+    width: 45%;
+    height: 50vh;
+    overflow: scroll;
+`
+
+const Nominations = styled.div`
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 8px;
+    width: 45%;
+    height: 50vh;
+    overflow: scroll;
+`
 
 function MovieContainer (props) {
 
@@ -26,17 +51,24 @@ function MovieContainer (props) {
     } 
 
         return(
-            <>
-            <div className="col-s-2 border col-xs-offset-4"> 
-            <h6>  Results for "{props.movie}"</h6>
-            {renderMovie()}
-            </div>
-            <div className="col-s-2 border col-xs-offset-4"> 
-            <h6>Nominations</h6>
-            {renderNominatedMovies()} 
-            </div>
-            </>   
-           
+            <MovieWrapper>
+                <Movies> 
+                    {<h6>{props.tooManyResults ? 'Too many results - please refine search...' : `Results for "${props.movie}"`}</h6>}
+                    {renderMovie()}
+                </Movies>
+                <Nominations> 
+                    <h6>Nominations</h6>
+                    {renderNominatedMovies()} 
+                </Nominations>
+                {/* <div className="col-s-2 border col-xs-offset-4"> 
+                    <h6>  Results for "{props.movie}"</h6>
+                    {renderMovie()}
+                </div>
+                <div className="col-s-2 border col-xs-offset-4"> 
+                    <h6>Nominations</h6>
+                    {renderNominatedMovies()} 
+                </div> */}
+            </MovieWrapper>    
         )
 };
 
