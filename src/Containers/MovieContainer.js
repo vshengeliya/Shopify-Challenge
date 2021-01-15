@@ -29,7 +29,7 @@ const Nominations = styled.div`
 
 function MovieContainer (props) {
 
-    const renderMovie = ()=>{
+    const renderMovie = () => {
 
         if (props.movieObject !== null && props.movieObject !== undefined){
             return props.movieObject.map((movie)=> 
@@ -40,7 +40,7 @@ function MovieContainer (props) {
         };
     };
 
-    const renderNominatedMovies = ()=>{
+    const renderNominatedMovies = () => {
   
        let newArray = props.updatedMovies.filter(movie=> {
             return movie.nominated === true});
@@ -50,24 +50,19 @@ function MovieContainer (props) {
         return newResult;
     } 
 
+
         return(
             <MovieWrapper>
                 <Movies> 
                     {<h6>{props.tooManyResults ? 'Too many results - please refine search...' : `Results for "${props.movie}"`}</h6>}
+                    <button type="button" className="btn btn-light btn-sm" onClick={props.changePage}>back</button>
+                    <button type="button" className="btn btn-light btn-sm" onClick={props.changePage}>forward</button>
                     {renderMovie()}
                 </Movies>
                 <Nominations> 
                     <h6>Nominations</h6>
                     {renderNominatedMovies()} 
                 </Nominations>
-                {/* <div className="col-s-2 border col-xs-offset-4"> 
-                    <h6>  Results for "{props.movie}"</h6>
-                    {renderMovie()}
-                </div>
-                <div className="col-s-2 border col-xs-offset-4"> 
-                    <h6>Nominations</h6>
-                    {renderNominatedMovies()} 
-                </div> */}
             </MovieWrapper>    
         )
 };

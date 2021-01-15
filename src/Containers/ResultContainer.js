@@ -7,7 +7,7 @@ import Banner from 'react-js-banner';
 const ResultsWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
+    border: 1px solid blue;
     height: auto;
     justify-content: center;
     align-items: center;
@@ -25,6 +25,7 @@ class ResultContainer extends React.Component {
     state = {
         movie: "",
         movieObject: null,
+        page: 1,
         nominatedMovies: null,
         isMax: false,
         renderBanner: false,
@@ -34,8 +35,8 @@ class ResultContainer extends React.Component {
 
     componentDidUpdate(prevProps, prevState){
 
-        if (this.state.movie !== prevState.movie){
-            fetch(`http://www.omdbapi.com/?s=${this.state.movie}&apikey=${process.env.REACT_APP_API_KEY}`)
+        if (this.state.movie !== prevState.movie  || this.state.page !== prevState.page){
+            fetch(`http://www.omdbapi.com/?s=${this.state.movie}&page=${this.state.page}&apikey=${process.env.REACT_APP_API_KEY}`)
             .then(resp => resp.json())
             .then(data => {
                 if (data.Error === 'Too many results.') {
@@ -45,7 +46,22 @@ class ResultContainer extends React.Component {
                 }
             })
         };
+
+        // if (this.state.page !== prevState.page) {
+        //     fetch(`http://www.omdbapi.com/?s=${this.state.movie}&page=${this.state.page}&apikey=${process.env.REACT_APP_API_KEY}`)
+        //     .then(resp => resp.json())
+        //     .then(data => {this.setState({movieObject: data.Search}, ()=> console.log(data))
+        //         }) 
+        // }
     };
+
+    changePage = (e) => {
+        if (e.target.innerText === 'forward'){
+            this.setState({page: this.state.page+1})
+        } else {
+            this.setState({page: this.state.page-1})
+        }
+    }
 
     searchHandler=(e)=>{
         this.setState({movie:e.target.value})
@@ -100,6 +116,7 @@ class ResultContainer extends React.Component {
                 updatedMovies={this.state.updatedMovies}
                 removeClickHandler={this.removeClickHandler}
                 tooManyResults={this.state.tooManyResults}
+                changePage={this.changePage}
             />
             </ResultsWrapper>
         )
