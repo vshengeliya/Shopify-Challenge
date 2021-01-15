@@ -26,10 +26,10 @@ class ResultContainer extends React.Component {
         movie: "",
         movieObject: null,
         page: 1,
+        updatedMovies: [],
         nominatedMovies: null,
         isMax: false,
         renderBanner: false,
-        updatedMovies: [],
         tooManyResults: false
     };
 
@@ -46,13 +46,6 @@ class ResultContainer extends React.Component {
                 }
             })
         };
-
-        // if (this.state.page !== prevState.page) {
-        //     fetch(`http://www.omdbapi.com/?s=${this.state.movie}&page=${this.state.page}&apikey=${process.env.REACT_APP_API_KEY}`)
-        //     .then(resp => resp.json())
-        //     .then(data => {this.setState({movieObject: data.Search}, ()=> console.log(data))
-        //         }) 
-        // }
     };
 
     changePage = (e) => {
@@ -71,21 +64,22 @@ class ResultContainer extends React.Component {
 
         let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true) 
         if (nominatedMovies.length > 4){
-            console.log("nominated", nominatedMovies.length)
             this.setState({renderBanner: true});
-            return null;
         } else{
 
+            let previousArray = [...this.state.updatedMovies]
             let newArray = [...this.state.movieObject]
+            let array = previousArray.concat(newArray)
+            let uniqArray = [... new Set (array)]
             let filteredObj = newArray.find((obj)=> obj=== movie_object)
             filteredObj.nominated = true
-            this.setState({updatedMovies:newArray}) 
-        }
+            this.setState({updatedMovies:uniqArray}) 
+        };
     };
 
     removeClickHandler=(movie_object)=>{
 
-        let newArray = [...this.state.movieObject]
+        let newArray = [...this.state.updatedMovies]
         let filteredObj = newArray.find((obj)=> obj=== movie_object)
         filteredObj.nominated = false
         this.setState({updatedMovies:newArray}) 
@@ -98,9 +92,12 @@ class ResultContainer extends React.Component {
               <h4>You've nominated all 5 movies, to change the selection, please remove a movie</h4>
             </div>
         </Banner>
-    )
+    );
 
     render() { 
+
+        console.log("updatedMovies", this.state.updatedMovies)
+        console.log("page", this.state.page)
         return(
             <ResultsWrapper>  
             { this.state.renderBanner ? this.renderDisplayBanner() : null }
