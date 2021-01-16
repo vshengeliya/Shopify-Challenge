@@ -42,5 +42,5 @@ To open project in a localhost:
 * run `npm install` - to install all the libraries
 * run `npm start` - to start the localhost
 
-Created by [Veronika Dodda]("https://github.com/vshengeliya")
+Created by [Veronika Dodda](https://github.com/vshengeliya)
 
