@@ -1,5 +1,7 @@
 The Shoppies: Movie awards for entrepreneurs
 
+See the deploy verion here: https://vshengeliya.github.io/Shopify-Challenge/.
+
 Shopify has branched out into movie award shows and we need your help. Please build us an app to help manage our movie nominations for the upcoming Shoppies.
 
 The Challenge
@@ -32,3 +34,6 @@ If you need inspiration, here are examples of what you can work on. If you work 
   * Animations for loading, adding/deleting movies, notifications
   * Create shareable links
   
+
+
+
