@@ -36,7 +36,7 @@ class ResultContainer extends React.Component {
     componentDidUpdate(prevProps, prevState){
 
         if (this.state.movie !== prevState.movie  || this.state.page !== prevState.page){
-            fetch(`http://www.omdbapi.com/?s=${this.state.movie}&page=${this.state.page}&apikey=${process.env.REACT_APP_API_KEY}`)
+            fetch(`https://www.omdbapi.com/?s=${this.state.movie}&page=${this.state.page}&apikey=${process.env.REACT_APP_API_KEY}`)
             .then(resp => resp.json())
             .then(data => {
                 if (data.Error === 'Too many results.') {
