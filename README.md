@@ -35,5 +35,12 @@ If you need inspiration, here are examples of what you can work on. If you work 
   * Create shareable links
   
 
+To open project in a localhost:
 
+* clone the repo to the local mashine
+* cd into the repo
+* run `npm install` - to install all the libraries
+* run `npm start` - to start the localhost
+
+Created by [Veronika Dodda]("https://github.com/vshengeliya")
 
