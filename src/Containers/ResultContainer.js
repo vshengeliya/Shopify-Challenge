@@ -44,7 +44,7 @@ class ResultContainer extends React.Component {
                 } else {
                     this.setState({movieObject: data.Search, tooManyResults: false })
                 }
-            })
+            });
         };
     };
 
@@ -53,8 +53,8 @@ class ResultContainer extends React.Component {
             this.setState({page: this.state.page+1})
         } else {
             this.setState({page: this.state.page-1})
-        }
-    }
+        };
+    };
 
     searchHandler=(e)=>{
         this.setState({movie:e.target.value})
@@ -65,12 +65,12 @@ class ResultContainer extends React.Component {
         let nominatedMovies = this.state.updatedMovies.filter(movie => movie.nominated === true) 
         if (nominatedMovies.length > 4){
             this.setState({renderBanner: true});
-        } else{
+        } else {
 
             let previousArray = [...this.state.updatedMovies]
             let newArray = [...this.state.movieObject]
             let array = previousArray.concat(newArray)
-            let uniqArray = [... new Set (array)]
+            let uniqArray = [...new Set (array)]
             let filteredObj = newArray.find((obj)=> obj=== movie_object)
             filteredObj.nominated = true
             this.setState({updatedMovies:uniqArray}) 
@@ -96,27 +96,25 @@ class ResultContainer extends React.Component {
 
     render() { 
 
-        console.log("updatedMovies", this.state.updatedMovies)
-        console.log("page", this.state.page)
         return(
             <ResultsWrapper>  
             { this.state.renderBanner ? this.renderDisplayBanner() : null }
-            <SearchWrapper>
-                <h4>Movie Title</h4>
-                <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
-            </SearchWrapper>
-            <MovieContainer 
-                movie={this.state.movie}
-                movieObject={this.state.movieObject}
-                getNominatedMovies={this.getNominatedMovies}
-                appClickHandler ={this.appClickHandler}
-                updatedMovies={this.state.updatedMovies}
-                removeClickHandler={this.removeClickHandler}
-                tooManyResults={this.state.tooManyResults}
-                changePage={this.changePage}
-            />
+             <SearchWrapper>
+                 <h3>Movie Title</h3>
+                 <Search searchHandler={this.searchHandler} searchValue={this.state.movie}/>
+             </SearchWrapper>
+             <MovieContainer 
+                 movie={this.state.movie}
+                 movieObject={this.state.movieObject}
+                 getNominatedMovies={this.getNominatedMovies}
+                 appClickHandler ={this.appClickHandler}
+                 updatedMovies={this.state.updatedMovies}
+                 removeClickHandler={this.removeClickHandler}
+                 tooManyResults={this.state.tooManyResults}
+                 changePage={this.changePage}
+             />
             </ResultsWrapper>
-        )
+        );
     };
 };
 

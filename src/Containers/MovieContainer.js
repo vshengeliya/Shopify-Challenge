@@ -18,15 +18,6 @@ const Movies = styled.div`
     overflow: scroll;
 `
 
-const Nominations = styled.div`
-    border: 1px solid gray;
-    border-radius: 6px;
-    padding: 8px;
-    width: 45%;
-    height: 50vh;
-    overflow: scroll;
-`
-
 function MovieContainer (props) {
 
     const renderMovie = () => {
@@ -59,12 +50,12 @@ function MovieContainer (props) {
                     <button type="button" className="btn btn-light btn-sm" onClick={props.changePage}>forward</button>
                     {renderMovie()}
                 </Movies>
-                <Nominations> 
+                <Movies> 
                     <h6>Nominations</h6>
                     {renderNominatedMovies()} 
-                </Nominations>
+                </Movies>
             </MovieWrapper>    
-        )
+        );
 };
 
 export default MovieContainer

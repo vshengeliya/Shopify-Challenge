@@ -24,10 +24,10 @@ function MovieCard (props){
 
     return (
         <>
-        <div>*{props.movie.Title}({props.movie.Year})</div> 
-        {button}
+            <div>*{props.movie.Title}({props.movie.Year})</div> 
+            {button}
         </> 
-        )
-}
+        );
+};
 
 export default MovieCard
