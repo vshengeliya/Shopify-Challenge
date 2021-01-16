@@ -51,8 +51,10 @@ class ResultContainer extends React.Component {
     changePage = (e) => {
         if (e.target.innerText === 'forward'){
             this.setState({page: this.state.page+1})
+        } else if ( this.state.page === 0){
+                return alert("please move forward to see search result")
         } else {
-            this.setState({page: this.state.page-1})
+                this.setState({page: this.state.page-1})
         };
     };
 
@@ -112,6 +114,7 @@ class ResultContainer extends React.Component {
                  removeClickHandler={this.removeClickHandler}
                  tooManyResults={this.state.tooManyResults}
                  changePage={this.changePage}
+                 page={this.state.page}
              />
             </ResultsWrapper>
         );

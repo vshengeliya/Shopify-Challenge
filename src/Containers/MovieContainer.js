@@ -46,6 +46,7 @@ function MovieContainer (props) {
             <MovieWrapper>
                 <Movies> 
                     {<h6>{props.tooManyResults ? 'Too many results - please refine search...' : `Results for "${props.movie}"`}</h6>}
+                    <p>page {props.page}</p>
                     <button type="button" className="btn btn-light btn-sm" onClick={props.changePage}>back</button>
                     <button type="button" className="btn btn-light btn-sm" onClick={props.changePage}>forward</button>
                     {renderMovie()}
