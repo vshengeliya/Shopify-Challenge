@@ -24,7 +24,7 @@ class ResultContainer extends React.Component {
 
     state = {
         movie: "",
-        movieObject: null,
+        movieArray: null,
         page: 1,
         updatedMovies: [],
         nominatedMovies: null,
@@ -42,7 +42,7 @@ class ResultContainer extends React.Component {
                 if (data.Error === 'Too many results.') {
                     this.setState({ tooManyResults: true })
                 } else {
-                    this.setState({movieObject: data.Search, tooManyResults: false })
+                    this.setState({movieArray: data.Search, tooManyResults: false })
                 }
             });
         };
@@ -70,7 +70,7 @@ class ResultContainer extends React.Component {
         } else {
 
             let previousArray = [...this.state.updatedMovies]
-            let newArray = [...this.state.movieObject]
+            let newArray = [...this.state.movieArray]
             let array = previousArray.concat(newArray)
             let uniqArray = [...new Set (array)]
             let filteredObj = newArray.find((obj)=> obj=== movie_object)
@@ -107,8 +107,7 @@ class ResultContainer extends React.Component {
              </SearchWrapper>
              <MovieContainer 
                  movie={this.state.movie}
-                 movieObject={this.state.movieObject}
-                 getNominatedMovies={this.getNominatedMovies}
+                 movieArray={this.state.movieArray}
                  appClickHandler ={this.appClickHandler}
                  updatedMovies={this.state.updatedMovies}
                  removeClickHandler={this.removeClickHandler}

@@ -22,8 +22,8 @@ function MovieContainer (props) {
 
     const renderMovie = () => {
 
-        if (props.movieObject !== null && props.movieObject !== undefined){
-            return props.movieObject.map((movie)=> 
+        if (props.movieArray !== null && props.movieArray !== undefined){
+            return props.movieArray.map((movie)=> 
             < MovieCard movie={movie} key={movie.imdbID} 
             appClickHandler={props.appClickHandler} 
             updatedMovies={props.updatedMovies}
@@ -34,15 +34,15 @@ function MovieContainer (props) {
     const renderNominatedMovies = () => {
   
        let newArray = props.updatedMovies.filter(movie=> {
+
             return movie.nominated === true});
-                
-        let newResult = newArray.map(movie => < MovieCard movie={movie} key={movie.imdbID} 
-            removeClickHandler={props.removeClickHandler} nominated={true} />);
-        return newResult;
-    } 
 
+            let newResult = newArray.map(movie => < MovieCard movie={movie} key={movie.imdbID}
+                removeClickHandler={props.removeClickHandler} nominated={true} movieObject={props.movieObject}/>);
+            return newResult;
+        };
 
-        return(
+        return (
             <MovieWrapper>
                 <Movies> 
                     {<h6>{props.tooManyResults ? 'Too many results - please refine search...' : `Results for "${props.movie}"`}</h6>}
